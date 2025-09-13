@@ -1,0 +1,4 @@
+fastapi==0.95.0          # FastAPI - фреймворк для создания API
+uvicorn==0.22.0          # ASGI сервер для запуска FastAPI приложения
+psycopg[binary]>=3.1,<4.0 # Библиотека для работы с PostgreSQL
+docker==7.1.0         # Официальный Python-клиент для Docke
