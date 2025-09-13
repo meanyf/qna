@@ -1,35 +1,41 @@
-import psycopg
-from docker_utils import is_container_running
+# app/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from .docker_utils import is_container_running
 
-# Настройки для подключения к базе данных
+# Настройки БД
 dbname = "qna_db"
 user = "postgres"
 password = "postgres"
-host = 'localhost'
+host = "localhost"
 port = 5435
-connection = None  # Инициализируем переменную connection заранее
+
+# Определяем хост в зависимости от контейнеров
 db_is_running = is_container_running("postgres15")
 app_is_running = is_container_running("qna-fastapi")
+
 if db_is_running and app_is_running:
     host = "postgres15"
 elif db_is_running and not app_is_running:
     host = "localhost"
 elif not db_is_running and app_is_running:
-    host = "host.docker.internal" if host.lower() == 'localhost' else host
-    
-try:
-    # Устанавливаем соединение с базой данных
-    connection = psycopg.connect(
-        dbname=dbname, user=user, password=password, host=host, port=port
-    )
+    host = "host.docker.internal" if host.lower() == "localhost" else host
 
-    print("Успешное подключение к базе данных!")
+# Строка подключения для SQLAlchemy
+DATABASE_URL = f"postgresql+psycopg://{user}:{password}@{host}:{port}/{dbname}"
 
-except Exception as e:
-    print(f"Ошибка при подключении к базе данных: {e}")
+# Создаём движок и фабрику сессий
+engine = create_engine(DATABASE_URL, echo=True, future=True)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
-finally:
-    # Закрываем соединение после выполнения операций
-    if connection:
-        connection.close()
-        print("Соединение с базой данных закрыто.")
+# Базовый класс для моделей
+Base = declarative_base()
+
+
+# Dependency для FastAPI
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

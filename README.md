@@ -18,7 +18,7 @@ uvicorn app.main:app --reload
 
 ```
 
-## 3. Запуск через Docker. Перейдите по адресу localhost:8002
+## 3. Запуск через Docker. Перейдите по адресу localhost:8000
 ```bash
 docker-compose -f docker-compose.yml build app
 docker-compose -f docker-compose.yml run --rm --service-ports app

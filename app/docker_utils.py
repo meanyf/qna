@@ -1,6 +1,5 @@
 import docker
 
-
 def is_container_running(container_name_or_id):
     try:
         # Создаем объект клиента Docker
