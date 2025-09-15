@@ -1,5 +1,7 @@
-fastapi==0.95.0          # FastAPI - фреймворк для создания API
+fastapi==0.116.1
 uvicorn==0.22.0          # ASGI сервер для запуска FastAPI приложения
 psycopg[binary]>=3.1,<4.0 # Библиотека для работы с PostgreSQL
 docker==7.1.0         # Официальный Python-клиент для Docker
-alembic==1.9.2           # Миграции для базы данных (SQLAlchemy)
+alembic           # Миграции для базы данных (SQLAlchemy)
+pydantic==1.10.12
+python-dotenv==0.19.2

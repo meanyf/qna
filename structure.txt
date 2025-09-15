@@ -1,0 +1,35 @@
+myproject/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                 # create_app / app factory, middleware, include routers
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py           # pydantic BaseSettings for env config
+│   │   └── security.py         # auth helpers, password hashing, JWT helpers
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── deps.py             # common dependencies (db session, current user, etc.)
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       ├── api.py          # APIRouter aggregator for v1
+│   │       └── endpoints/
+│   │           ├── __init__.py
+│   │           └── items.py    # an example router
+│   ├── db/
+│   │   ├── __init__.py
+│   │   ├── base.py             # Base model import for Alembic
+│   │   ├── models.py           # SQLAlchemy models (or multiple files)
+│   │   ├── session.py          # sessionmaker / engine creation
+│   │   └── crud.py             # DB helpers (optionally split per model)
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   └── item.py             # Pydantic request/response schemas
+│   ├── services/               # business logic that uses crud + schemas
+│   └── tests/
+│       ├── __init__.py
+│       └── test_items.py
+├── alembic/                    # migrations
+├── requirements.txt / pyproject.toml
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
