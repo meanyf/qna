@@ -20,8 +20,8 @@ def create_question(db: Session, *, text: str) -> Question:
     return question
 
 
-def list_questions(db: Session, skip: int = 0, limit: int = 100) -> list[Question]:
-    return db.execute(select(Question).offset(skip).limit(limit)).scalars().all()
+def list_questions(db: Session) -> list[Question]:
+    return db.execute(select(Question)).scalars().all()
 
 
 def update_question(db: Session, question: Question, *, text: str) -> Question:
@@ -46,10 +46,3 @@ def create_answer(db: Session, *, question: Question, user_id, text) -> Answer:
 def get_answer(db: Session, answer_id: int) -> Answer | None:
     return db.execute(select(Answer).where(Answer.id == answer_id)).scalar_one_or_none()
 
-
-def update_answer(db: Session, answer: Answer, **fields) -> Answer:
-    # никак не трогаем question_id здесь — это ответственность сервиса
-    for k, v in fields.items():
-        setattr(answer, k, v)
-    db.flush()
-    return answer

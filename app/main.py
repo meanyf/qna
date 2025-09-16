@@ -1,20 +1,8 @@
 # main.py
 
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.services.questions_service import create_question
-from pydantic import BaseModel
+from fastapi import FastAPI
+from app.api.v1.api import api_router 
 
-app = FastAPI()
+app = FastAPI(title="QnA")
 
-
-# Модель для данных запроса
-class QuestionRequest(BaseModel):
-    text: str
-
-
-@app.post("/questions/")
-def post_answer(question: QuestionRequest, db: Session = Depends(get_db)):
-    question = create_question(db, question.text)  # Создаем вопрос с текстом
-    return {"id": question.id, "text": question.text}
+app.include_router(api_router)

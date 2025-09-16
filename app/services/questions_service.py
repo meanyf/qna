@@ -27,25 +27,13 @@ def get_question(db: Session, question_id: int) -> Question:
     return question
 
 
-def list_questions(db: Session, skip: int = 0, limit: int = 100) -> list[Question]:
-    """Список вопросов с пагинацией."""
-    return crud.list_questions(db, skip=skip, limit=limit)
-
-
-def update_question(db: Session, question_id: int, text: str) -> Question:
-    """Обновить текст вопроса."""
-    question = crud.get_question(db, question_id)
-    if question is None:
-        raise HTTPException(status_code=404, detail="Question not found")
-
-    crud.update_question(db, question, text=text)
-    db.commit()
-    db.refresh(question)
-    return question
+def list_questions(db: Session) -> list[Question]:
+    """Список вопросов."""
+    return crud.list_questions(db)
 
 
 def delete_question(db: Session, question_id: int) -> None:
-    """Удалить вопрос (с каскадным удалением ответов, если настроено)."""
+    """Удалить вопрос (с каскадным удалением ответов)."""
     question = crud.get_question(db, question_id)
     if question is None:
         raise HTTPException(status_code=404, detail="Question not found")
