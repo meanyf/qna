@@ -22,19 +22,7 @@ class Settings(BaseSettings):
         if cached is not None:
             return cached
 
-        host = self.DB_HOST
-
-        db_is_running = is_container_running("postgres15")
-        app_is_running = is_container_running("qna-fastapi")
-
-        if db_is_running and app_is_running:
-            host = "postgres15"
-        elif db_is_running and not app_is_running:
-            host = "localhost"
-        elif not db_is_running and app_is_running:
-            host = "host.docker.internal" if host.lower() == "localhost" else host
-
-        uri = f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASS}@{host}:{self.DB_PORT}/{self.DB_NAME}"
+        uri = f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         # сохраняем в экземпляре
         object.__setattr__(self, "_sqlalchemy_database_uri", uri)
         return uri
