@@ -7,18 +7,15 @@ docker-compose up --build
 docker-compose exec app alembic upgrade head
 ```
 
-Приложение будет доступно по адресу:
-http://localhost:8000
-
 Документация API:
 Swagger UI: http://localhost:8000/docs
 
 ## 2. Тесты
 ```bash
-python -m pytest
+docker-compose exec app python -m pytest
 ```
 
-## 2. Структура проекта
+## 3. Структура проекта
 ```
 qna
 ├──alembic
@@ -66,6 +63,6 @@ qna
 ├──Dockerfile
 ├──README.md
 ├──requirements.txt
-├──structure.txt
+├──.env
 └──.gitignore
 ```
