@@ -1,6 +1,5 @@
 # config.py
 from pydantic import BaseSettings
-from app.utils.docker_utils import is_container_running
 from typing import Optional
 
 

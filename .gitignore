@@ -37,8 +37,10 @@ Thumbs.db
 
 # Python files
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *.pyo
+
 
 # Python virtual environments
 venv/

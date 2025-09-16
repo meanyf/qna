@@ -5,3 +5,6 @@ docker==7.1.0         # Официальный Python-клиент для Docker
 alembic           # Миграции для базы данных (SQLAlchemy)
 pydantic==1.10.12
 python-dotenv==0.19.2
+pytest==7.4.0
+pytest-cov==4.0.0
+httpx==0.24.0             
