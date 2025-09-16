@@ -23,6 +23,7 @@ services:
       - "8000:8000"  # Пробрасываем порт для доступа к приложению
     volumes:
       - ./app:/app/app  # Монтируем локальную папку ./app в /app/app контейнера
-
+      - ./alembic:/app/alembic  # Монтируем папку с Alembic в контейнер
+      - ./alembic.ini:/app/alembic.ini  # Монтируем конфиг alembic.ini в контейнер
 volumes:
   postgres_data:  # Определяем volume для хранения данных базы данных
